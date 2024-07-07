@@ -1,13 +1,18 @@
-import Gun from "gun/gun";
+import gun from "../Config/DbProvider";
 
-const gun = Gun({
-    peers: ['http://localhost:8765/gun']
-});
+const get = async () => {
 
-const getReports = () => {
+        let reports = [];
+
+        gun.get('reports').map().on((report) => {
+            if (report) {
+                reports.push(report);
+            }
+        });
 
 
+      return reports;
 
-}
+};
 
-export default getReports
+export default get;

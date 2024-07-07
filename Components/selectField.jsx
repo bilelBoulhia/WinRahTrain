@@ -1,49 +1,32 @@
-import React, { useRef, useState } from "react";
-import { useColorScheme, View, StyleSheet } from "react-native";
-import Colors from "../Constants/Colors";
-import { Button, Text } from "../Style/Theme";
-import { Select } from "react-native-magnus";
-import gare from "../Constants/Gares.json";
+import React, { useRef } from 'react';
+import { StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, Button } from '../Style/Theme';
+import { Select } from 'react-native-magnus';
+import Colors from '../Constants/Colors';
+import gare from '../Constants/Gares.json';
 
-const Selectfield = ({ fieldname }) => {
-    const [selectValue, setSelectedValue] = useState(null);
+const SelectField = ({ fieldName, value, onSelect }) => {
     const selectRef = useRef();
-
     const colorScheme = useColorScheme();
-    const selectBackgroundColor =
-        colorScheme === "dark" ? Colors.dark.background : Colors.light.background;
+    const backgroundColor = colorScheme === 'dark' ? Colors.dark.background : Colors.light.background;
 
-    const onSelectOption = (item) => {
-        setSelectedValue(item);
-    };
 
     return (
         <View style={styles.container}>
-            <Text  style={styles.fieldName}>{fieldname}</Text>
-            <View style={styles.buttonContainer}>
-                <Button
+            <Text style={[styles.fieldName]}>{fieldName}</Text>
+            <Button onPress={() => selectRef.current?.open()}>
 
-                    style={styles.button}
-                    w={200}
-                    borderWidth={1}
-                    onPress={() => {
-                        if (selectRef.current) {
-                            selectRef.current.open();
-                        }
-                    }}
-                >
-                    {selectValue ? selectValue.toString() : "Select"}
-                </Button>
-            </View>
+            {value || `Select ${fieldName}`}
 
+            </Button>
             <Select
-                onSelect={onSelectOption}
+                onSelect={onSelect}
                 ref={selectRef}
-                value={selectValue}
-                bg={selectBackgroundColor}
+                value={value}
+                bg={backgroundColor}
                 data={gare.gares}
-                renderItem={(item, index) => (
-                    <Select.Option bg={selectBackgroundColor} value={item}>
+                renderItem={(item) => (
+                    <Select.Option bg={backgroundColor} value={item}>
                         <Text>{item}</Text>
                     </Select.Option>
                 )}
@@ -54,22 +37,16 @@ const Selectfield = ({ fieldname }) => {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: "flex-start",
-        paddingRight: 20,
-        marginTop:25
+        marginBottom: 20,
+        alignSelf:"center"
     },
     fieldName: {
-        marginBottom: 20,
-        textAlign: "left",
-        fontSize: 15,
-        
+        fontSize: 16,
+        fontWeight: '600',
+        marginBottom: 8,
     },
-    buttonContainer: {
-        marginTop: 15,
-    },
-    button: {
 
-    },
+
 });
 
-export default Selectfield;
+export default SelectField;

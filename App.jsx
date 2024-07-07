@@ -1,5 +1,16 @@
 
-import { View, Text} from 'react-native';
+
+import React, { useState, useEffect } from 'react';
+import { StyleSheet } from 'react-native';
+import {Card, Text, View} from './Style/Theme';
+
+import Links from "./Components/Links";
+import Moudal from "./Components/Moudal";
+import DisplayCard from "./Components/DisplayCard";
+
+
+
+
 
 
 export default function App() {
@@ -7,12 +18,37 @@ export default function App() {
 
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.container}>
 
 
-            <Text>Welcome to GunDB with Expo!</Text>
+
+
+            <DisplayCard  time='5:50' station='alger' destination='france' />
+
+
+            <Moudal style={styles.modalButton}/>
+
+
+                <Links/>
+
+
 
 
         </View>
+
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'flex-end',
+
+    },
+    modalButton: {
+        marginBottom: 100,
+
+        justifyContent: 'center',
+        alignSelf: 'center'
+    },
+});

@@ -1,11 +1,9 @@
-import Gun from 'gun/gun';
+import gun from "../Config/DbProvider";
 
-const gun = Gun({
-    peers: ['http://localhost:8765/gun']
-});
 
-const insertReport = (report) => {
+const insert = (key,report) => {
 
+    gun.get(key).set(report);
 };
 
-export default insertReport;
+export default insert;

@@ -1,26 +1,39 @@
-import * as React from 'react';
-import { Modal, Portal, Button, PaperProvider } from 'react-native-paper';
-import {Text} from "../Style/Theme";
+import React, { useState } from "react";
+import {SafeAreaView, StyleSheet, useColorScheme} from "react-native";
+import {  Modal } from "react-native-magnus";
+import {  Button } from "../Style/Theme";
+import Colors from "../Constants/Colors";
+import Form from "./Form";
+import { Icon } from '@rneui/themed';
 
-const Modal = () => {
-    const [visible, setVisible] = React.useState(false);
-
-    const showModal = () => setVisible(true);
-    const hideModal = () => setVisible(false);
-    const containerStyle = {backgroundColor: 'white', padding: 20};
+const Moudal = ({ style }) => {
+    const [visible, setVisible] = useState(false);
+    const colorScheme = useColorScheme();
+    const modalBackgroundColor = colorScheme === 'dark' ? Colors.dark.background : Colors.light.background;
 
     return (
-        <PaperProvider>
-            <Portal>
-                <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-                    <Text>Train à votre gare ? Veuillez le signaler ici</Text>
-                </Modal>
-            </Portal>
-            <Button style={{marginTop: 30}} onPress={showModal}>
-                <Text>Train à votre gare ? Veuillez le signaler ici</Text>
-            </Button>
-        </PaperProvider>
-    );
-};
+        <SafeAreaView style={style}>
+            <Button
 
-export default Modal;
+                onPress={() => setVisible(true)}>
+
+             Un train est à votre gare ? le signaler ici.
+            </Button>
+            <Modal
+
+                isVisible={visible}
+                bg={modalBackgroundColor}
+
+            >
+
+                    <Icon name='close'  onPress={() => { setVisible(false); }} />
+
+
+                <Form  onPress={() => { setVisible(false); }}/>
+
+            </Modal>
+        </SafeAreaView>
+    );
+}
+
+export default Moudal;

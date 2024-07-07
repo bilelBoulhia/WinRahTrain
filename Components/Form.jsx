@@ -36,7 +36,7 @@ const Form = ({ onSubmit }) => {
                     onPress={handleSubmit}
                     disabled={!departureStation || !destinationStation}
                 >
-                    Report
+                    report
                 </Button>
 
             </View>

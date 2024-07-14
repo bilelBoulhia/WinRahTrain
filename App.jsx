@@ -1,41 +1,32 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import {Card, Text, View} from './Style/Theme';
-
+import { View } from './Style/Theme';
 import Links from "./Components/Links";
+import gun from "./Config/DbProvider";
 import Moudal from "./Components/Moudal";
-import DisplayCard from "./Components/DisplayCard";
+import List from "./Components/List";
+import Qa from "./Components/Qa";
+import get from "./utils/get";
 
 
+function App() {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+
+       get('reports',setData)
 
 
+    }, []);
 
-
-export default function App() {
-
-
-
+    console.table('d',data)
     return (
         <View style={styles.container}>
-
-
-
-
-            <DisplayCard  time='5:50' station='alger' destination='france' />
-
-
-            <Moudal style={styles.modalButton}/>
-
-
-                <Links/>
-
-
-
-
+            <Qa/>
+            <List list={data} />
+            <Moudal style={styles.modalButton} />
+            <Links/>
         </View>
-
     );
 }
 
@@ -43,12 +34,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-end',
-
+    },
+    qaContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 40,
+    },
+    qaIcon: {
+        marginRight: 10,
     },
     modalButton: {
         marginBottom: 100,
-
         justifyContent: 'center',
         alignSelf: 'center'
     },
 });
+export default App;

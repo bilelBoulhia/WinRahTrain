@@ -27,7 +27,7 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/Righteous-Regular.ttf"]
+          "fonts": ["assets/fonts/Righteous-Regular.ttf"]
         }
       ]
     ]

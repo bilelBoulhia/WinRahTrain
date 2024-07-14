@@ -2,10 +2,12 @@ const tintColorLight = '#121212';
 const tintColorDark = '#fff';
 
 export default {
+
     light: {
         text: '#000',
         background: '#fff',
 
+        fontFamily:'Righteous',
 
         ComponentBackground:'#000',
         ComponentTextColor: '#fff',

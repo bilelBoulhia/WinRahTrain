@@ -3,23 +3,34 @@ import { StyleSheet, useColorScheme } from 'react-native';
 import { View, Text, Button } from '../Style/Theme';
 import Colors from '../Constants/Colors';
 import SelectField from '../Components/selectField';
+import insert from "../utils/insert";
+import Report from "../Models/Raport";
 
-const Form = ({ onSubmit }) => {
+const Form = ({onResult}) => {
+
     const [departureStation, setDepartureStation] = useState(null);
     const [destinationStation, setDestinationStation] = useState(null);
+
     const colorScheme = useColorScheme();
     const backgroundColor = colorScheme === 'dark' ? Colors.dark.background : Colors.light.background;
     const textColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
 
-    const handleSubmit = () => {
+    const handleSubmit =  () => {
         if (departureStation && destinationStation) {
-            onSubmit({ departureStation, destinationStation });
+
+            const Rep = new Report(departureStation, destinationStation);
+            const onSubmit =  insert('reports',Rep) ;
+            onResult(onSubmit);
+
+
+
         }
     };
 
     return (
         <View style={[styles.container, { backgroundColor }]}>
-            <Text style={[styles.title, { color: textColor }]}>Rapporter la location de train</Text>
+
+
             <SelectField
                 fieldName="Departure Station"
                 value={departureStation}
@@ -34,8 +45,7 @@ const Form = ({ onSubmit }) => {
                 <Button
 
                     onPress={handleSubmit}
-                    disabled={!departureStation || !destinationStation}
-                >
+                    disabled={!departureStation || !destinationStation || (destinationStation === departureStation)}>
                     report
                 </Button>
 
@@ -53,7 +63,9 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        fontWeight: 'bold',
+
+
+
         marginBottom: 30,
 
         textAlign: 'center',

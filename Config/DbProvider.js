@@ -2,7 +2,7 @@
 import Gun from 'gun/gun';
 
 const gun = Gun({
-    peers: ['http://localhost:8765/gun']
+    peers: ['http://localhost:8081/gun']
 });
 
 export default gun;

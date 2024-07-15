@@ -2,7 +2,8 @@
 import Gun from 'gun/gun';
 
 const gun = Gun({
-    peers: ['http://localhost:8080/gun']
+    peers: ['http://localhost:8080/gun'],
+    radisk:true
 });
 
 export default gun;

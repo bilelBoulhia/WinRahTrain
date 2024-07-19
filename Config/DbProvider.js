@@ -1,7 +1,7 @@
 
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
-import {EXPO_FIREBASE_API_KEY} from '@env'
+
 
 const firebaseConfig = {
       apiKey: "AIzaSyDCJn2KtHEeHNIdQMSLrcNsheQZIBMiIck",

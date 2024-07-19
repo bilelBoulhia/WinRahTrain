@@ -3,5 +3,5 @@ import { remove,ref  } from "firebase/database";
 
 
 
-remove(ref(db,reference)).then();
+remove(ref(db,reference)).then(r=> console.log(r));
 

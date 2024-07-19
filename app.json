@@ -1,3 +1,4 @@
+
 {
   "expo": {
     "name": "WRT",
@@ -14,10 +15,11 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": ["fetch"]
+        "UIBackgroundModes": [
+          "fetch"
+        ]
       }
     },
-
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -25,7 +27,8 @@
       },
       "permissions": [
         "ACCESS_BACKGROUND_LOCATION"
-      ]
+      ],
+      "package": "com.bilelboulahia.WRT"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,10 +37,16 @@
       [
         "expo-font",
         {
-          "fonts": ["assets/fonts/Righteous-Regular.ttf"]
-        },
-        ["@config-plugins/react-native-webrtc"]
+          "fonts": [
+            "assets/fonts/Righteous-Regular.ttf"
+          ]
+        }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2cf19f55-2a12-4638-a18d-f205496ff088"
+      }
+    }
   }
 }

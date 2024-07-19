@@ -1,10 +1,12 @@
-import {DayTimeDeConstructor} from '../utils/Deconstructors'
+import {DayTimeDeConstructor} from '../function/Deconstructors'
+
+
 class Report {
-    constructor(station, destination, date = new Date().getTime()) {
+    constructor(station, destination) {
+
         this.station = station;
         this.destination = destination;
-        this.date = date;
-        this.time = DayTimeDeConstructor(date);
+        this.time = DayTimeDeConstructor(new Date().getTime());
     }
 }
 

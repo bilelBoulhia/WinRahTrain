@@ -25,12 +25,12 @@ const Moudal = ({ style }) => {
             <Button onPress={() => setVisible(true)}>
                 Un train est à votre gare ? le signaler ici.
             </Button>
-          <Modal isVisible={visible} bg={modalBackgroundColor}>
+            <Modal isVisible={visible} bg={modalBackgroundColor}>
 
-            <Icon name='close'  onPress={() => { setVisible(false); }} />
-            <Form onResult={handleClosing} />
+                <Icon name='close'  onPress={() => { setVisible(false); }} />
+                <Form onResult={handleClosing} />
 
-          </Modal>
+            </Modal>
         </SafeAreaView>
     );
 }

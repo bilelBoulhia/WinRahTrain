@@ -1,23 +1,28 @@
 import React, {useEffect, useState} from "react";
-import getLatest from "../utils/newstItem";
+import getLatestDate from "../function/getLatestDate";
 import { View} from '../Style/Theme';
 import { Text} from 'react-native';
 import {StyleSheet, useColorScheme} from "react-native";
 import Colors from "../Constants/Colors";
-import {DateDecConstructor} from "../utils/Deconstructors";
+import {DateDecConstructor} from "../function/Deconstructors";
+
 
 const DisplayDate = () => {
     const [latestDate, setLatestDate] = useState(null);
     const TextColor = useColorScheme() === 'dark' ? Colors.dark.text : Colors.light.text;
 
     useEffect(() => {
-
-        return getLatest('reports', (item) => {
-            setLatestDate(item.date);
+        const unsubscribe = getLatestDate((date) => {
+            setLatestDate(date);
         });
+
+        return () => {
+
+            unsubscribe();
+        };
     }, []);
 
-    console.log('ls', latestDate);
+
 
     return (
         <View style={styles.emptyContainer}>

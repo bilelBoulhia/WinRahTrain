@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { View } from './Style/Theme';
+import 'react-native-url-polyfill/auto';
+
 import Links from "./Components/Links";
+import Qa from "./Components/Qa";
 import Moudal from "./Components/Moudal";
 import List from "./Components/List";
-import Qa from "./Components/Qa";
-import get from "./utils/get";
-import registerTask from "./Schedule/Background/Register_Procces";
-import saveTask from "./Schedule/Background/Async_Storage";
-import CheckTime from "./Schedule/Foreground/CheckTime";
-import Delete from "./utils/delete";
+import get from "./function/get";
 
-async function scheduleDeletion() {
-    await saveTask();
-    await registerTask();
-    await CheckTime();
-}
 function App() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
+        const unsubscribe = get((items) => {
+            setData(items);
+        });
 
-        get('reports',setData)
-        scheduleDeletion()
 
+
+        return () => unsubscribe();
     }, []);
 
-    console.table('d',data)
     return (
         <View style={styles.container}>
-            <Qa/>
+            <Qa />
             <List list={data} />
             <Moudal style={styles.modalButton} />
-            <Links/>
+            <Links />
         </View>
     );
 }
@@ -57,4 +52,34 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
 });
+
 export default App;
+//appwrite
+{/*
+  const handleResponse = async (response) => {
+        const eventData = response.payload;
+        setData(prevData => {
+            const updatedData = [...prevData];
+            const index = updatedData.findIndex(item => item.$id === eventData.$id);
+            if (index !== -1) {
+                updatedData[index] = eventData;
+            } else {
+                updatedData.push(eventData);
+            }
+
+            return updatedData;
+        });
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await get(IDs.DatabaseId, IDs.collectionId);
+            setData(result);
+        };
+        fetchData();
+
+        const unsubscribe = subscribe(IDs.DatabaseId, IDs.collectionId, handleResponse);
+
+        // Cleanup subscription on component unmount
+        return () => unsubscribe();
+    }, []);*/}

@@ -1,23 +1,23 @@
 import React, {useRef, useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Animated, useColorScheme} from 'react-native';
+import {FlatList, StyleSheet, useColorScheme} from 'react-native';
 import DisplayCard from './DisplayCard';
-import { MotiView } from 'moti';
+
 import { View } from '../Style/Theme';
 
 import { Text} from 'react-native';
 
 import Colors from "../Constants/Colors";
 import DisplayDate from "./displayDate";
+import {MotiView} from "moti";
 
 
 
 
 
 
-const List = ({ list }) => {
+
+const List = ({ list  }) => {
     const flatListRef = useRef(null);
-
-
     const TextColor = useColorScheme() ==='dark' ? Colors.dark.text : Colors.light.text;
     useEffect(() => {
         if (flatListRef.current && list.length > 0) {
@@ -26,17 +26,20 @@ const List = ({ list }) => {
 
     }, [list]);
 
-    if (list.length <= 0) {
+    if ( list <= 0) {
         return (
             <View style={styles.emptyContainer}>
-                <Text style={[{ color: TextColor }, styles.textContainer]}>Aucun train n'a été signalé</Text>
+                <Text style={[{ color: TextColor }, styles.textContainer]}>aucun train a ete raporter</Text>
             </View>
         );
     } else {
+
         return (
             <View style={styles.containerWrapper}>
                 <View style={styles.datecontainer}>
-                <DisplayDate />
+
+                    <DisplayDate/>
+
                 </View>
                 <View style={styles.container}>
                     <FlatList
@@ -45,6 +48,7 @@ const List = ({ list }) => {
                         data={[...list].reverse()}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item, index }) => (
+
                             <MotiView
                                 key={index.toString()}
                                 from={{
@@ -61,6 +65,7 @@ const List = ({ list }) => {
                                     delay: index * 50,
                                 }}
                             >
+
                                 <DisplayCard
 
                                     time={item.time}
@@ -78,6 +83,7 @@ const List = ({ list }) => {
                     />
                 </View>
             </View>
+
         );
     }
 };
@@ -90,6 +96,9 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         fontFamily: 'Righteous',
+        width:200,
+
+        textAlign:'center',
     },
     containerWrapper: {
         flex: 1,

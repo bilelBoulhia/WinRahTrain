@@ -3,8 +3,9 @@ import { StyleSheet, useColorScheme } from 'react-native';
 import { View, Text, Button } from '../Style/Theme';
 import Colors from '../Constants/Colors';
 import SelectField from '../Components/selectField';
-import insert from "../utils/insert";
+import insert from "../function/insert";
 import Report from "../Models/Raport";
+
 
 const Form = ({onResult}) => {
 
@@ -19,7 +20,7 @@ const Form = ({onResult}) => {
         if (departureStation && destinationStation) {
 
             const Rep = new Report(departureStation, destinationStation);
-            const onSubmit =  insert('reports',Rep) ;
+            const onSubmit =  insert(Rep) ;
             onResult(onSubmit);
 
 

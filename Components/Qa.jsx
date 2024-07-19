@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet,Text, TouchableOpacity, Animated ,Dimensions }
 import { View} from '../Style/Theme';
 import { Icon } from '@rneui/themed';
 import {useFonts} from "expo-font";
-import Delete from "../utils/delete";
+
 
 const Qa = () => {
     const [expanded, setExpanded] = useState(false);

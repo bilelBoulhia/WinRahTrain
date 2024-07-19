@@ -23,7 +23,7 @@ const DisplayCard = ({ station, destination, time }) => {
 
     return (
         <View style={styles.container}>
-            <Card  containerStyle={[styles.card,{backgroundColor:BackgroundColor}]} title={station.name}>
+            <Card  containerStyle={[styles.card,{backgroundColor:BackgroundColor}]} >
                 <View style={styles.row}>
                     <Text style={[styles.text,{color: TextColor}]}>
                         {station}

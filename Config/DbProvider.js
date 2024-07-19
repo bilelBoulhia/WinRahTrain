@@ -4,13 +4,13 @@ import { getDatabase } from "firebase/database";
 
 
 const firebaseConfig = {
-      apiKey: "AIzaSyDCJn2KtHEeHNIdQMSLrcNsheQZIBMiIck",
-      authDomain: "winrahtrain.firebaseapp.com",
-      projectId: "winrahtrain",
-      storageBucket: "winrahtrain.appspot.com",
-      messagingSenderId: "109651923705",
-      appId: "1:109651923705:web:2de5f243acaeeaa7204828",
-      databaseURL: "https://winrahtrain-default-rtdb.europe-west1.firebasedatabase.app/",
+      apiKey:API_KEY,
+      authDomain:authDomain,
+      projectId: PROJECT_ID,
+      storageBucket: storageBucket,
+      messagingSenderId:messagingSenderId ,
+      appId: APP_ID,
+      databaseURL: DATABASE_URL,
 };
 
 

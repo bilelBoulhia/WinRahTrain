@@ -66,7 +66,7 @@ const Qa = () => {
                 </View>
                 <Text style={styles.example}>Par exemple:</Text>
                 <Text style={styles.chartExample}>
-                    Alger ⇒ Reghaia ⇒ 14:30
+                    Alger ⇒ Reghaia ⇒ 14:31
                 </Text>
             </Animated.View>
         </SafeAreaView>

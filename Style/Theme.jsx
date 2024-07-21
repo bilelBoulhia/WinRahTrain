@@ -1,10 +1,10 @@
 import React from 'react';
 import {  View as DefaultView, Dimensions ,Text as DefaultText} from 'react-native';
 
-import { Button as DefaultButton, Card as DefaultCard } from "@rneui/themed";
+import { Button as DefaultButton } from "@rneui/themed";
 import Colors from "../Constants/Colors";
 import { useColorScheme } from "react-native";
-import {useFonts} from "expo-font";
+
 
 
 
@@ -38,7 +38,7 @@ const Text = (props) => {
     const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
     const fontWeight = Colors[useColorScheme() ?? 'light'].fontWeight;
     const fontSize = getResponsiveFontSize(style?.fontSize || 14);
-    useFonts({'Righteous': require('../assets/fonts/Righteous-Regular.ttf')});
+
 
     const fontFamily=Colors.light.fontFamily
 
@@ -50,7 +50,7 @@ const Button = (props) => {
     const bg = useThemeColor({ light: lightColor, dark: darkColor }, 'ComponentBackground');
     const color = useThemeColor({ light: lightColor, dark: darkColor }, 'ComponentTextColor');
     const radius = 4;
-    useFonts({'Righteous': require('../assets/fonts/Righteous-Regular.ttf')});
+
     const baseWidth = 320;
     const width = getResponsiveWidth(baseWidth);
     const fontSize = getResponsiveFontSize(14);
@@ -64,25 +64,14 @@ const Button = (props) => {
 };
 
 const View = (props) => {
-    const { style, lightColor, darkColor, ...otherProps } = props;
+    const { style,onLayoutprop ,lightColor, darkColor, ...otherProps } = props;
     const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
 
-    return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+
+
+
+    return <DefaultView   style={[{ backgroundColor }, style]} {...otherProps} />;
 };
 
-const Card = (props) => {
-    const { style, lightColor, darkColor, ...otherProps } = props;
-    const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'ComponentBackground');
-    const color = useThemeColor({ light: lightColor, dark: darkColor }, 'ComponentTextColor');
 
-    const width = getResponsiveWidth( 300);
-    const fontSize = getResponsiveFontSize(14);
-
-    return <DefaultCard
-        containerStyle={{ borderRadius: 20, height: 50, backgroundColor: backgroundColor, width: width, alignSelf: 'center' }}
-        textStyle={{ color: color, fontSize: fontSize }}
-        {...otherProps}
-    />;
-};
-
-export { Text, View, Button, Card,getResponsiveWidth,getResponsiveFontSize };
+export { Text, View, Button, getResponsiveWidth,getResponsiveFontSize };

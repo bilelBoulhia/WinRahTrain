@@ -1,4 +1,4 @@
-import { useFonts } from 'expo-font';
+
 import {View, Text} from 'react-native';
 import {Card} from '@rneui/themed';
 import {getResponsiveWidth,getResponsiveFontSize} from '../Style/Theme'
@@ -11,8 +11,6 @@ import Colors from "../Constants/Colors";
 
 
 const DisplayCard = ({ station, destination, time }) => {
-
-
 
     const ColorScheme = useColorScheme();
     const BackgroundColor = ColorScheme === 'dark' ? Colors.dark.ComponentBackground : Colors.light.ComponentBackground;

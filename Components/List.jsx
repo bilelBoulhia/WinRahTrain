@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {FlatList, StyleSheet, useColorScheme} from 'react-native';
 import DisplayCard from './DisplayCard';
 

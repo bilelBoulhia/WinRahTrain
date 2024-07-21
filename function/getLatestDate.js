@@ -7,8 +7,6 @@ const getLatestDate = (callback) => {
 
    const unsubscribe= onValue(latestItem, (snapshot) => {
 
-
-      console.log(Object.values(snapshot.val()))
      snapshot.exists() ? callback(Object.values(snapshot.val())[0].timestamp) : callback(null)
 
    });

@@ -1,14 +1,18 @@
 import React, { useState, useRef } from 'react';
-import { SafeAreaView, StyleSheet,Text, TouchableOpacity, Animated ,Dimensions } from 'react-native';
+import {SafeAreaView, StyleSheet, Text, TouchableOpacity, Animated, Dimensions} from 'react-native';
 import { View} from '../Style/Theme';
 import { Icon } from '@rneui/themed';
 import {useFonts} from "expo-font";
+
 
 
 const Qa = () => {
     const [expanded, setExpanded] = useState(false);
     const animatedHeight = useRef(new Animated.Value(0)).current;
     const [fontsLoaded] = useFonts({ 'Righteous': require('../assets/fonts/Righteous-Regular.ttf') });
+
+    //for some reason I have to hardcode this shit
+
 
     if (!fontsLoaded) {
         return null; 
@@ -72,7 +76,7 @@ const Qa = () => {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top:  Dimensions.get('window').height - Dimensions.get('window').height + 30,
+        top:  (Dimensions.get('window').height - Dimensions.get('window').height) +10  ,
         right: 10,
         zIndex: 1,
 
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         marginBottom: 10,
-        color: '#333',
+
         fontFamily:'Righteous',
     },
     description: {

@@ -1,29 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { StyleSheet } from 'react-native';
 import { View } from './Style/Theme';
 import 'react-native-url-polyfill/auto';
-
+import * as SplashScreen from 'expo-splash-screen';
 import Links from "./Components/Links";
 import Qa from "./Components/Qa";
 import Moudal from "./Components/Moudal";
 import List from "./Components/List";
 import get from "./function/get";
+import * as Font from 'expo-font';
 
+
+SplashScreen.preventAutoHideAsync().catch(()=>{});
 function App() {
     const [data, setData] = useState([]);
+    const [appIsReady, setAppIsReady] = useState(false);
 
     useEffect(() => {
-        const unsubscribe = get((items) => {
-            setData(items);
-        });
+        let unsubscribe;
+        async function Prepare() {
+            try {
 
+                const [items] = await Promise.all([
+                    new Promise((res)=>{
+                        unsubscribe = get((loadedItems)=> res(loadedItems));
+                    }),
+                    Font.loadAsync({ 'Righteous': require('./assets/fonts/Righteous-Regular.ttf') })
+                ])
 
+                setData(items);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setAppIsReady(true);
+            }
+        }
 
-        return () => unsubscribe();
+        Prepare().catch(()=>{});
+
+        return () => {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        };
+
     }, []);
 
+    const onLayoutRootView = useCallback(async () => {
+        if (appIsReady) {
+
+            await SplashScreen.hideAsync();
+        }
+    }, [appIsReady]);
+
+    if (!appIsReady) {
+        return null;
+    }
+
     return (
-        <View style={styles.container}>
+        <View style={styles.container} onLayout={onLayoutRootView} >
             <Qa />
             <List list={data} />
             <Moudal style={styles.modalButton} />
@@ -54,32 +89,3 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-//appwrite
-{/*
-  const handleResponse = async (response) => {
-        const eventData = response.payload;
-        setData(prevData => {
-            const updatedData = [...prevData];
-            const index = updatedData.findIndex(item => item.$id === eventData.$id);
-            if (index !== -1) {
-                updatedData[index] = eventData;
-            } else {
-                updatedData.push(eventData);
-            }
-
-            return updatedData;
-        });
-    };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await get(IDs.DatabaseId, IDs.collectionId);
-            setData(result);
-        };
-        fetchData();
-
-        const unsubscribe = subscribe(IDs.DatabaseId, IDs.collectionId, handleResponse);
-
-        // Cleanup subscription on component unmount
-        return () => unsubscribe();
-    }, []);*/}

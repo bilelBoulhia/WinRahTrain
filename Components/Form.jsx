@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, useColorScheme } from 'react-native';
-import { View, Text, Button } from '../Style/Theme';
+import { View, Button } from '../Style/Theme';
 import Colors from '../Constants/Colors';
 import SelectField from '../Components/selectField';
 import insert from "../function/insert";
@@ -14,7 +14,7 @@ const Form = ({onResult}) => {
 
     const colorScheme = useColorScheme();
     const backgroundColor = colorScheme === 'dark' ? Colors.dark.background : Colors.light.background;
-    const textColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
+
 
     const handleSubmit =  () => {
         if (departureStation && destinationStation) {

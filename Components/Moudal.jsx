@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {SafeAreaView, StyleSheet, useColorScheme} from "react-native";
+import {SafeAreaView, useColorScheme} from "react-native";
 import {  Modal } from "react-native-magnus";
 import {  Button } from "../Style/Theme";
 

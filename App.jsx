@@ -9,12 +9,22 @@ import Moudal from "./Components/Moudal";
 import List from "./Components/List";
 import get from "./function/get";
 import * as Font from 'expo-font';
+import gare from "./Constants/Gare.json";
 
 
 SplashScreen.preventAutoHideAsync().catch(()=>{});
 function App() {
     const [data, setData] = useState([]);
     const [appIsReady, setAppIsReady] = useState(false);
+
+
+
+
+
+
+
+
+
 
     useEffect(() => {
         let unsubscribe;

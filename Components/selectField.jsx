@@ -5,7 +5,7 @@ import { Select } from 'react-native-magnus';
 import Colors from '../Constants/Colors';
 import gare from '../Constants/Gares.json';
 
-const SelectField = ({ fieldName, value, onSelect }) => {
+const SelectField = ({ fieldName, value, onSelect,data ,isDisabled}) => {
     const selectRef = useRef();
     const colorScheme = useColorScheme();
     const backgroundColor = colorScheme === 'dark' ? Colors.dark.background : Colors.light.background;
@@ -14,17 +14,18 @@ const SelectField = ({ fieldName, value, onSelect }) => {
     return (
         <View style={styles.container}>
             <Text style={[styles.fieldName]}>{fieldName}</Text>
-            <Button onPress={() => selectRef.current?.open()}>
+            <Button disabled={isDisabled} onPress={() => selectRef.current?.open()}>
 
             {value || `Select ${fieldName}`}
 
             </Button>
             <Select
+                onPress={() => isDisabled && selectRef.current?.close()}
                 onSelect={onSelect}
                 ref={selectRef}
                 value={value}
                 bg={backgroundColor}
-                data={gare.gares}
+                data={data}
                 renderItem={(item) => (
                     <Select.Option bg={backgroundColor} value={item}>
                         <Text>{item}</Text>

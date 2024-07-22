@@ -6,9 +6,9 @@ import {
     Modal,
     TouchableWithoutFeedback,
     Animated,
-    useColorScheme,
+    useColorScheme, Dimensions,
 } from 'react-native';
-import { View, Text, Button, getResponsiveFontSize } from '../Style/Theme';
+import {View, Text, Button, getResponsiveFontSize, getResponsiveWidth} from '../Style/Theme';
 import Linges from '../Constants/Linges.json';
 import Colors from "../Constants/Colors";
 import { Icon } from '@rneui/themed';
@@ -18,7 +18,7 @@ const Dropdown = ({ onselect }) => {
     const [selectedValue, setSelectedValue] = useState(Linges.lignes[0]);
     const animatedHeight = useRef(new Animated.Value(0)).current;
 
-    const Textcolor = useColorScheme() === 'dark' ? Colors.dark.text : Colors.light.text;
+    const Textcolor = useColorScheme() === 'dark' ? Colors.dark.ComponentTextColor : Colors.light.ComponentTextColor;
     const CompColor = useColorScheme() === 'dark' ? Colors.dark.ComponentBackground : Colors.light.ComponentBackground;
     const BgColor = useColorScheme() === 'dark' ? Colors.dark.background : Colors.light.background;
 
@@ -48,14 +48,14 @@ const Dropdown = ({ onselect }) => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container,{backgroundColor:CompColor}]}>
             <Button
                 buttonStyle={{ width: 250, borderRadius: 10, backgroundColor: 'transparent' }}
                 onPress={toggleDropdown}
                 titleStyle={{ color: Textcolor }}
             >
                 {selectedValue}
-                <Icon name="chevron-down-outline" size={18} type='ionicon' color={CompColor} style={styles.icon} />
+                <Icon name="chevron-down-outline" size={18} type='ionicon' color={BgColor} style={styles.icon} />
             </Button>
 
             <Modal
@@ -78,8 +78,8 @@ const Dropdown = ({ onselect }) => {
                                 inputRange: [0, 1],
                                 outputRange: [0, 220],
                             }),
-                            borderColor: CompColor,
-                            backgroundColor: BgColor
+                            borderColor: BgColor,
+                            backgroundColor: CompColor
                         }]}>
                             <FlatList
                                 data={Linges.lignes}
@@ -103,11 +103,13 @@ const Dropdown = ({ onselect }) => {
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
-        top: 15,
-        left: 0,
-        fontSize: 16,
-        zIndex: 1,
+    position:'absolute',
+    top:  (Dimensions.get('window').height - Dimensions.get('window').height) +5,
+    left:10,
+
+    width:getResponsiveWidth(180),
+    borderRadius:15,
+zIndex:99
     },
     icon: {
         marginLeft: 10,
@@ -117,8 +119,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        paddingTop: 55,
-        paddingLeft: 55,
+        paddingTop: 45,
+        paddingLeft: 50,
     },
     dropdown: {
         borderRadius: 5,

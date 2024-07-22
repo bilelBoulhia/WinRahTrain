@@ -1,5 +1,14 @@
 import React, { useState, useRef } from 'react';
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity, Animated, Dimensions} from 'react-native';
+import {
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    Animated,
+    Dimensions,
+    Modal,
+    TouchableWithoutFeedback
+} from 'react-native';
 import { View} from '../Style/Theme';
 import { Icon } from '@rneui/themed';
 
@@ -15,6 +24,7 @@ const Qa = () => {
 
     const toggleExpand = () => {
         setExpanded(!expanded);
+
         Animated.spring(animatedHeight, {
             toValue: expanded ? 0 : 1,
             useNativeDriver: false,
@@ -36,6 +46,21 @@ const Qa = () => {
                     />
 
             </TouchableOpacity>
+
+            <Modal
+                visible={expanded}
+                transparent={true}
+                animationType="none"
+                onRequestClose={() => {
+                    setExpanded(true);
+                    Animated.spring(animatedHeight, {
+                        toValue: 0,
+                        useNativeDriver: false,
+                    }).start();
+                }}
+            >
+            <TouchableWithoutFeedback onPress={() => setExpanded(false)}>
+                <View style={styles.modalOverlay}>
             <Animated.View style={[
                 styles.content,
                 {
@@ -46,7 +71,7 @@ const Qa = () => {
                     opacity: animatedHeight
                 }
             ]}>
-                <View></View>
+
                 <Text style={styles.title}>Informations sur l'app</Text>
                 <Text style={styles.description}>
                     Ce panneau d'affichage explique les informations montrées sur l'écran responsable d'indiquer la position du train.
@@ -62,6 +87,9 @@ const Qa = () => {
                     Alger ⇒ Reghaia ⇒ 14:31
                 </Text>
             </Animated.View>
+                </View>
+                    </TouchableWithoutFeedback>
+                </Modal>
         </SafeAreaView>
     );
 };
@@ -69,7 +97,7 @@ const Qa = () => {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top:  (Dimensions.get('window').height - Dimensions.get('window').height) +10  ,
+        top:  (Dimensions.get('window').height - Dimensions.get('window').height) +5  ,
         right: 10,
         zIndex: 1,
 
@@ -78,6 +106,15 @@ const styles = StyleSheet.create({
     iconContainer: {
         alignSelf: 'flex-end',
 
+    },
+    modalOverlay: {
+
+        flex: 1,
+        backgroundColor: 'transparent',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-end',
+        paddingTop: 25,
+        paddingLeft: 25,
     },
 
     content: {

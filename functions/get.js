@@ -12,9 +12,6 @@ const get = (Ligne,callback) => {
      })
 
 
-        console.log('snapshot',snapshot)
-        console.log('Ligne',Ligne)
-        console.log('items',items)
 
      callback(Object.values(items));
     });

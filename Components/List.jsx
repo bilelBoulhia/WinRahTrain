@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
         marginVertical: 100,
         alignSelf: 'center',
         overflow: 'hidden',
+
     },
     container: {
         flex: 1,

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {Dimensions, StyleSheet} from 'react-native';
-import { View,Text } from './Style/Theme';
+import { StyleSheet} from 'react-native';
+import { View } from './Style/Theme';
 import 'react-native-url-polyfill/auto';
 import * as SplashScreen from 'expo-splash-screen';
 import Links from "./Components/Links";
@@ -78,10 +78,9 @@ function App() {
     return (
         <View style={styles.container} onLayout={onLayoutRootView} >
 
+
             <Dropdown  onselect={setSelectedValue}/>
-
             <Qa />
-
             <List list={data} Ligne={selectedValue} />
             <Moudal style={styles.modalButton} />
             <Links />

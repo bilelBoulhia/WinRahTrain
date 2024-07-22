@@ -51,7 +51,7 @@ const Button = (props) => {
     const color = useThemeColor({ light: lightColor, dark: darkColor }, 'ComponentTextColor');
     const radius = 4;
 
-    const baseWidth = 320;
+    const baseWidth = 360;
     const width = getResponsiveWidth(baseWidth);
     const fontSize = getResponsiveFontSize(14);
     const fontFamily = Colors.light.fontFamily;

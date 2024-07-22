@@ -3,13 +3,12 @@ import { StyleSheet, useColorScheme } from 'react-native';
 import { View, Button } from '../Style/Theme';
 import Colors from '../Constants/Colors';
 import SelectField from '../Components/selectField';
-import insert from "../function/insert";
+import insert from "../functions/insert";
 import Report from "../Models/Raport";
-
-
 import Linges from '../Constants/Linges.json';
 import dic from '../Constants/gare-dic'
-
+import showToast from "./Toast";
+import ShowToast from "./Toast";
 
 
 const Form = ({onResult}) => {
@@ -24,24 +23,31 @@ const Form = ({onResult}) => {
     const colorScheme = useColorScheme();
     const backgroundColor = colorScheme === 'dark' ? Colors.dark.background : Colors.light.background;
 
+  const handleinsert = () =>{
+      const Rep = new Report(departureStation, destinationStation);
+      return  insert(Rep,ligne)
+
+    }
 
     const handleGare = (ligne) => dic.has(ligne) ? setdata(dic.get(ligne)) : setdata(["error"]);
     useEffect(() => {
         handleGare(ligne)
-
     }, [ligne]);
 
 
 
     const handleSubmit =  () => {
         if (departureStation && destinationStation) {
-            const Rep = new Report(departureStation, destinationStation);
-            const onSubmit =  insert(Rep) ;
-            onResult(onSubmit);
+
+            const onSubmit = handleinsert();
+            onSubmit.then(result => onResult(result));
+
+
         }
     };
 
     return (
+
         <View style={[styles.container, { backgroundColor }]}>
 
             <SelectField

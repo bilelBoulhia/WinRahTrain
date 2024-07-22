@@ -1,26 +1,27 @@
 import React, {useEffect, useState} from "react";
-import getLatestDate from "../function/getLatestDate";
+import getLatestDate from "../functions/getLatestDate";
 import { View} from '../Style/Theme';
 import { Text} from 'react-native';
 import {StyleSheet, useColorScheme} from "react-native";
 import Colors from "../Constants/Colors";
-import {DateDecConstructor} from "../function/Deconstructors";
+import {DateDecConstructor} from "../functions/Deconstructors";
 
 
-const DisplayDate = () => {
+const DisplayDate = ({Ligne}) => {
     const [latestDate, setLatestDate] = useState(null);
     const TextColor = useColorScheme() === 'dark' ? Colors.dark.text : Colors.light.text;
-
+    let Deps = Ligne;
     useEffect(() => {
-        const unsubscribe = getLatestDate((date) => {
+        const unsubscribe = getLatestDate(Ligne,(date) => {
             setLatestDate(date);
+
         });
 
         return () => {
 
             unsubscribe();
         };
-    }, []);
+    }, [Deps]);
 
 
 

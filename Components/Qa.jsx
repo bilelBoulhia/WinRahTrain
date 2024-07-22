@@ -2,21 +2,14 @@ import React, { useState, useRef } from 'react';
 import {SafeAreaView, StyleSheet, Text, TouchableOpacity, Animated, Dimensions} from 'react-native';
 import { View} from '../Style/Theme';
 import { Icon } from '@rneui/themed';
-import {useFonts} from "expo-font";
+
 
 
 
 const Qa = () => {
     const [expanded, setExpanded] = useState(false);
     const animatedHeight = useRef(new Animated.Value(0)).current;
-    const [fontsLoaded] = useFonts({ 'Righteous': require('../assets/fonts/Righteous-Regular.ttf') });
 
-    //for some reason I have to hardcode this shit
-
-
-    if (!fontsLoaded) {
-        return null; 
-    }
 
 
 

@@ -15,4 +15,4 @@ const firebaseConfig = {
 
 export const fb_app = initializeApp(firebaseConfig);
 export const db = getDatabase(fb_app);
-export const reference = 'reports/';
+export const REPORTS_REF = "reports";

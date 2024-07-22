@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {SafeAreaView, useColorScheme} from "react-native";
 import {  Modal } from "react-native-magnus";
 import {  Button } from "../Style/Theme";
-
+import showToast from "./Toast";
 import Colors from "../Constants/Colors";
 import Form from "./Form";
 import { Icon } from '@rneui/themed';
@@ -15,8 +15,13 @@ const Moudal = ({ style }) => {
     const modalBackgroundColor = colorScheme === 'dark' ? Colors.dark.background : Colors.light.background;
 
 
-    const handleClosing = () => {
+    const handleClosing = (isSuccess) => {
         setVisible(false);
+        if (isSuccess) {
+            showToast('merci pour votre rapport :)');
+        } else {
+            showToast('error');
+        }
     };
 
 

@@ -46,7 +46,7 @@ const Text = (props) => {
 };
 
 const Button = (props) => {
-    const { style, lightColor, darkColor, ...otherProps } = props;
+    const { style, lightColor, darkColor, buttonStyle, titleStyle, ...otherProps } = props;
     const bg = useThemeColor({ light: lightColor, dark: darkColor }, 'ComponentBackground');
     const color = useThemeColor({ light: lightColor, dark: darkColor }, 'ComponentTextColor');
     const radius = 4;
@@ -57,8 +57,8 @@ const Button = (props) => {
     const fontFamily = Colors.light.fontFamily;
 
     return <DefaultButton
-        buttonStyle={{ backgroundColor: bg, borderRadius: radius, width: width, alignSelf: 'center' }}
-        titleStyle={{ color: color, fontSize: fontSize,fontFamily: fontFamily }}
+        buttonStyle={[{ backgroundColor: bg, borderRadius: radius, width: width, alignSelf: 'center' }, buttonStyle]}
+        titleStyle={[{ color: color, fontSize: fontSize, fontFamily: fontFamily }, titleStyle]}
         {...otherProps}
     />;
 };

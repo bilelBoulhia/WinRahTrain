@@ -1,4 +1,4 @@
-import {DayTimeDeConstructor} from '../function/Deconstructors'
+import {DayTimeDeConstructor} from '../functions/Deconstructors'
 
 
 class Report {

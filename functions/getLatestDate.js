@@ -1,9 +1,10 @@
-import {db, reference} from "../Config/DbProvider";
+import { db,REPORTS_REF } from '../Config/DbProvider';
 import {limitToLast, onValue, orderByChild, query, ref} from "firebase/database";
 
 
-const getLatestDate = (callback) => {
-   const latestItem = query(ref(db, reference), orderByChild('timestamp'), limitToLast(1));
+const getLatestDate = (Ligne,callback) => {
+   const reportRef = ref(db, `${REPORTS_REF}/${Ligne}/`);
+   const latestItem = query(reportRef, orderByChild('timestamp'), limitToLast(1));
 
    const unsubscribe= onValue(latestItem, (snapshot) => {
 

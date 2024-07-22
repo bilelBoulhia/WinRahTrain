@@ -16,7 +16,7 @@ import {MotiView} from "moti";
 
 
 
-const List = ({ list  }) => {
+const List = ({ list ,Ligne }) => {
     const flatListRef = useRef(null);
     const TextColor = useColorScheme() ==='dark' ? Colors.dark.text : Colors.light.text;
     useEffect(() => {
@@ -38,7 +38,7 @@ const List = ({ list  }) => {
             <View style={styles.containerWrapper}>
                 <View style={styles.datecontainer}>
 
-                    <DisplayDate/>
+                    <DisplayDate Ligne={Ligne}/>
 
                 </View>
                 <View style={styles.container}>

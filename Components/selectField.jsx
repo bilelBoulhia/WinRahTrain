@@ -3,7 +3,7 @@ import { StyleSheet, useColorScheme } from 'react-native';
 import { View, Text, Button } from '../Style/Theme';
 import { Select } from 'react-native-magnus';
 import Colors from '../Constants/Colors';
-import gare from '../Constants/Gares.json';
+
 
 const SelectField = ({ fieldName, value, onSelect,data ,isDisabled}) => {
     const selectRef = useRef();

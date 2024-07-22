@@ -7,8 +7,7 @@ import insert from "../functions/insert";
 import Report from "../Models/Raport";
 import Linges from '../Constants/Linges.json';
 import dic from '../Constants/gare-dic'
-import showToast from "./Toast";
-import ShowToast from "./Toast";
+
 
 
 const Form = ({onResult}) => {

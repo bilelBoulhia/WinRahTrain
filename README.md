@@ -60,11 +60,6 @@ npm expo start --ios
 
 
 
-## Download
-
-you can download  the android  version from here 
--[mediafire](https://www.mediafire.com/file/ragqtt5rhv5kxhz/WRT.apk/file?fbclid=IwZXh0bgNhZW0CMTAAAR0o4PKg5UxVW26dOUKqGF75UaX1E5ZMwgYIPjn6BMKP4bFykF2DfmKo5Ak_aem_4lsQr_mzoXZhxJSdKht8Vw)
-
 
 ## Credits
 

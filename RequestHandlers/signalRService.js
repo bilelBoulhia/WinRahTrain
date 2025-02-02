@@ -1,7 +1,7 @@
 import * as signalR from "@microsoft/signalr";
 
-const localurl = "https://localhost:7130/wrtHub";
-const produrl = "https://wrtserver-latest.onrender.com/wrtHub";
+
+
 
 class SignalRService {
     constructor() {
@@ -11,7 +11,7 @@ class SignalRService {
         SignalRService.instance = this;
 
         this.connection = new signalR.HubConnectionBuilder()
-            .withUrl(produrl, {
+            .withUrl(`${process.env.PROD_URL}/wrtHub`, {
                 skipNegotiation: true,
                 transport: signalR.HttpTransportType.WebSockets,
             })

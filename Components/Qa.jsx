@@ -97,7 +97,7 @@ const Qa = () => {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top:  (Dimensions.get('window').height - Dimensions.get('window').height) +5  ,
+        top:  (Dimensions.get('window').height - Dimensions.get('window').height) +55  ,
         right: 10,
         zIndex: 1,
 

@@ -3,45 +3,59 @@ import { StyleSheet, useColorScheme } from 'react-native';
 import { View, Button } from '../Style/Theme';
 import Colors from '../Constants/Colors';
 import SelectField from '../Components/selectField';
-import insert from "../functions/insert";
-import Report from "../Models/Raport";
+
+
 import Linges from '../Constants/Linges.json';
-import dic from '../Constants/gare-dic'
+import signalRService from "../RequestHandlers/signalRService";
+
 
 
 
 const Form = ({onResult}) => {
 
     const [data,setdata] = useState([]);
-    const [departureStation, setDepartureStation] = useState(null);
-    const [destinationStation, setDestinationStation] = useState(null);
-    const [ligne, setLigne] = useState("");
-
-
-
+    const [currentGare, setDepartureStation] = useState(null);
+    const [destinationtGare, setDestinationStation] = useState(null);
+    const [trainRoute, setLigne] = useState("");
     const colorScheme = useColorScheme();
     const backgroundColor = colorScheme === 'dark' ? Colors.dark.background : Colors.light.background;
 
-  const handleinsert = () =>{
-      const Rep = new Report(departureStation, destinationStation);
-      return  insert(Rep,ligne)
+    useEffect(()=>{
+
+        setDestinationStation(null);
+        setDepartureStation(null);
+        const handleFetchingGare= async ()=>{
+
+            const res = await fetch(`https://wrtserver-latest.onrender.com/api/Gares/getGares?TrainRoutes=${trainRoute}`)
+            const data = await res.json();
+
+            console.log(trainRoute)
+            console.log(data)
+            setdata(data);
+        }
+        if(trainRoute !== ""){ handleFetchingGare().catch(error =>console.log(error));}
+    },[trainRoute])
+
+    const handleInsert = async (report) =>{
+        try {
+            await signalRService.startConnection();
+            await signalRService.connection.invoke("SendReport",report)
+            signalRService.connection.on("Error", (errorMessage) => {
+                alert(`Error: ${errorMessage}`);
+            });
+       }catch(error){
+
+           alert(error)
+
+       }
+
 
     }
-
-    const handleGare = (ligne) => dic.has(ligne) ? setdata(dic.get(ligne)) : setdata(["error"]);
-    useEffect(() => {
-        handleGare(ligne)
-    }, [ligne]);
-
-
-
-    const handleSubmit =  () => {
-        if (departureStation && destinationStation) {
-
-            const onSubmit = handleinsert();
-            onSubmit.then(result => onResult(result));
-
-
+    const handleSubmit = async () => {
+        if (currentGare && destinationtGare) {
+            const report = {trainRoute,currentGare, destinationtGare};
+            await handleInsert(report);
+            onResult(true)
         }
     };
 
@@ -51,31 +65,30 @@ const Form = ({onResult}) => {
 
             <SelectField
                 fieldName="La linge"
-                value={ligne}
+                value={trainRoute}
                 onSelect={setLigne}
-                data={Linges.lignes}
+                data={Linges.lignes.map(l=>l.value)}
             />
             <SelectField
                 fieldName="Departure Station"
-                value={departureStation}
-                isDisabled={!ligne}
+                value={currentGare}
+                isDisabled={!trainRoute}
                 onSelect={setDepartureStation}
                 data={data}
             />
             <SelectField
                 fieldName="Destination Station"
-                value={destinationStation}
+                value={destinationtGare}
 
-                isDisabled={!ligne}
+                isDisabled={!trainRoute}
 
                 onSelect={setDestinationStation}
                 data={data}
             />
             <View style={styles.button}>
                 <Button
-
                     onPress={handleSubmit}
-                    disabled={ !departureStation || !destinationStation || (destinationStation === departureStation)}>
+                    disabled={ !currentGare || !destinationtGare || (currentGare === destinationtGare)}>
                     report
                 </Button>
 

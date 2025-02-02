@@ -1,105 +1,102 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import { StyleSheet} from 'react-native';
-import { View } from './Style/Theme';
+import {  View } from './Style/Theme';
 import 'react-native-url-polyfill/auto';
-import * as SplashScreen from 'expo-splash-screen';
+import Linges from './Constants/Linges.json';
 import Links from "./Components/Links";
 import Qa from "./Components/Qa";
 import Moudal from "./Components/Moudal";
 import List from "./Components/List";
-import get from "./functions/get";
-import * as Font from 'expo-font';
+
 import Dropdown from "./Components/DropDown";
-import Linges from './Constants/Linges.json';
+
+import signalRService from "./RequestHandlers/signalRService";
+import * as SplashScreen from "expo-splash-screen";
+import * as Font from 'expo-font';
 
 
 
+SplashScreen.preventAutoHideAsync().catch(() => {});
+export default function SignalRClient() {
 
 
-SplashScreen.preventAutoHideAsync().catch(()=>{});
-function App() {
+    const [selectedValue, setSelectedValue] = useState(Linges.lignes[0].value);
 
-    const [selectedValue , setSelectedValue] = useState(Linges.lignes[0]);
-    const [data, setData] = useState([]);
+
     const [appIsReady, setAppIsReady] = useState(false);
+
 
     useEffect(() => {
         let unsubscribe;
-        async function Prepare() {
+        async function prepare() {
             try {
-
-                const [items] = await Promise.all([
-                    new Promise((res)=>{
-                        unsubscribe = get(selectedValue,(loadedItems) => {
-                            res(loadedItems);
-                            setData(loadedItems);
-
-                        });
-                    }),
-                    Font.loadAsync({ 'Righteous': require('./assets/fonts/Righteous-Regular.ttf') })
-                ])
-
-                setData(items);
-
+                await Font.loadAsync({ 'Righteous': require('./assets/fonts/Righteous-Regular.ttf') });
             } catch (error) {
-
-              console.error(error);
-
+                console.error(error);
             } finally {
                 setAppIsReady(true);
             }
         }
 
+        prepare().catch(console.error);
+        return () => unsubscribe?.();
+    }, []);
 
+    useEffect(() => {
+        const setupConnection = async () => {
+            try {
+                await signalRService.startConnection();
+                signalRService.connection.on("Error", (errorMessage) => {
+                    alert(`Error: ${errorMessage}`);
+                });
 
-        Prepare().catch(()=>{});
-
-        return () => {
-            if (unsubscribe) {
-                unsubscribe();
+            } catch (error) {
+                console.error("Connection error:", error);
             }
         };
 
-    }, [selectedValue]);
+        setupConnection().catch(err=>console.log(err));
+        return () => {
+            if (signalRService.connection) {
+                signalRService.connection.off("ReportsFetched");
+            }
+        };
+        }, []);
+
+
+
+
 
     const onLayoutRootView = useCallback(async () => {
         if (appIsReady) {
-
             await SplashScreen.hideAsync();
         }
     }, [appIsReady]);
 
     if (!appIsReady) {
-
         return null;
-
     }
 
     return (
-        <View style={styles.container} onLayout={onLayoutRootView} >
-
-
-            <Dropdown  onselect={setSelectedValue}/>
+        <View style={styles.container} onLayout={onLayoutRootView}>
+            <Dropdown onselect={setSelectedValue} />
             <Qa />
-            <List list={data} Ligne={selectedValue} />
+            <List Ligne={selectedValue} />
             <Moudal style={styles.modalButton} />
             <Links />
         </View>
     );
 }
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-end',
-
     },
-
     modalButton: {
         marginBottom: 100,
         justifyContent: 'center',
         alignSelf: 'center'
     },
 });
-
-export default App;

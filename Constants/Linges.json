@@ -1,9 +1,16 @@
 {
   "lignes": [
-    "Alger ⇄ thenia",
-    "Alger ⇄ affroun",
-    "Alger ⇄ Oued Aissi",
-    "Alger ⇄ Zeralda",
-    "Alger ⇄ Aeroport"
+    {
+      "name":"Alger ⇄ thenia","value":"AlgerThenia"
+    },
+    {
+      "name":"Alger ⇄ affroun","value":"AlgerElAffroun"
+    },
+    {
+      "name":"Alger ⇄ Oued Aissi","value":"AlgerOuedAissi"
+    },
+    {
+      "name":"Alger ⇄ Aeroport","value":"AghaAeroport"
+    }
  ]
 }

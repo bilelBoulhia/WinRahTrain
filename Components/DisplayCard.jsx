@@ -6,6 +6,7 @@ import {useColorScheme} from "react-native";
 import SvgIcon from '../assets/SvgIcon';
 import { StyleSheet } from 'react-native';
 import Colors from "../Constants/Colors";
+import {useEffect} from "react";
 
 
 
@@ -15,6 +16,7 @@ const DisplayCard = ({ station, destination, time }) => {
     const ColorScheme = useColorScheme();
     const BackgroundColor = ColorScheme === 'dark' ? Colors.dark.ComponentBackground : Colors.light.ComponentBackground;
     const TextColor = ColorScheme === 'dark' ? Colors.dark.ComponentTextColor : Colors.light.ComponentTextColor;
+
 
 
 
@@ -31,7 +33,7 @@ const DisplayCard = ({ station, destination, time }) => {
                         {destination}
                     </Text>
                     <Text style={[styles.text,{color: TextColor}]}>
-                        {time}
+                        {new Date(time).getHours() + ':' + new Date(time).getMinutes() }
                     </Text>
                 </View>
             </Card>
@@ -50,9 +52,6 @@ const styles = StyleSheet.create({
     },
     card: {
         padding: 10,
-
-
-
         borderRadius:10
     },
     row: {

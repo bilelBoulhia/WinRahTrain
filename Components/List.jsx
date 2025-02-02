@@ -1,32 +1,59 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {FlatList, StyleSheet, useColorScheme} from 'react-native';
 import DisplayCard from './DisplayCard';
 
-import { View } from '../Style/Theme';
+import {getResponsiveFontSize, getResponsiveWidth, View} from '../Style/Theme';
 
 import { Text} from 'react-native';
 
 import Colors from "../Constants/Colors";
-import DisplayDate from "./displayDate";
 import {MotiView} from "moti";
+import signalRService from "../RequestHandlers/signalRService";
 
 
 
 
 
 
-
-const List = ({ list ,Ligne }) => {
+const List = (Ligne) => {
     const flatListRef = useRef(null);
+    const [reports,setReports] = useState([]);
     const TextColor = useColorScheme() ==='dark' ? Colors.dark.text : Colors.light.text;
+
+
     useEffect(() => {
-        if (flatListRef.current && list.length > 0) {
+
+        if (flatListRef.current  > 0) {
             flatListRef.current.scrollToOffset({ offset: 0, animated: true });
         }
+        const ListenToUpdates=()=>{
+            try{
+                console.log(Ligne)
+                signalRService.connection.invoke("GetReports", Ligne.Ligne).catch(console.error);
+                signalRService.connection.on("ReportsFetched", (reports) => {
+                    setReports(reports);
+                    console.log(reports);
+                });
+                signalRService.connection.on("ReportReceived",(newReprt)=>{
+                    setReports(prev=>[newReprt,...prev]);
+                })
 
-    }, [list]);
+            }catch(e){
+                console.log(e);
+            }
+        }
+        ListenToUpdates();
 
-    if ( list <= 0) {
+        return () => {
+            if (signalRService.connection) {
+                signalRService.connection.off("ReportsFetched");
+                signalRService.connection.off("ReportReceived");
+            }
+        };
+
+    }, [Ligne]);
+
+    if ( reports.length <= 0) {
         return (
             <View style={styles.emptyContainer}>
                 <Text style={[{ color: TextColor }, styles.textContainer]}>aucun train a ete raporter</Text>
@@ -36,16 +63,26 @@ const List = ({ list ,Ligne }) => {
 
         return (
             <View style={styles.containerWrapper}>
-                <View style={styles.datecontainer}>
 
-                    <DisplayDate Ligne={Ligne}/>
+                <View style={styles.headers}>
 
-                </View>
-                <View style={styles.container}>
+                    <View style={styles.row}>
+                        <Text style={[styles.text,{color: TextColor}]}>
+                            station actuelle
+                        </Text>
+
+                        <Text style={[styles.text,{color: TextColor}]}>
+                            destination
+                        </Text>
+                        <Text style={[styles.text,{color: TextColor}]}>
+                            Heure
+                        </Text>
+                    </View>
                     <FlatList
 
+
                         ref={flatListRef}
-                        data={[...list].reverse()}
+                        data={(reports).reverse()}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item, index }) => (
 
@@ -67,10 +104,9 @@ const List = ({ list ,Ligne }) => {
                             >
 
                                 <DisplayCard
-
-                                    time={item.time}
-                                    destination={item.destination}
-                                    station={item.station}
+                                    time={item.arrivalHour}
+                                    destination={item.destinationtGare}
+                                    station={item.currentGare}
                                 />
                             </MotiView>
                         )}
@@ -113,14 +149,30 @@ const styles = StyleSheet.create({
 
     },
 
+    headers:{
+
+        width: getResponsiveWidth(380),
+    },
     contentContainer: {
         flexGrow: 1,
         justifyContent: 'flex-end',
         paddingBottom: 20,
     },
-    datecontainer:{
-        marginLeft:30
-    }
+
+   row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+    },
+
+    text: {
+        flex: 1,
+        textAlign: 'center',
+        fontFamily:'Righteous',
+        color:'white',
+        fontSize:getResponsiveFontSize(14),
+    },
 });
 
 export default List;

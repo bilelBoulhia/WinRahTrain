@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback } from 'react';
+import React, {useRef, useState, useCallback, forwardRef} from 'react';
 import {
     TouchableOpacity,
     FlatList,
@@ -13,11 +13,13 @@ import Linges from '../Constants/Linges.json';
 import Colors from "../Constants/Colors";
 import { Icon } from '@rneui/themed';
 
+
+
+
 const Dropdown = ({ onselect }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState(Linges.lignes[0]);
+    const [selectedName, setSelectedName] = useState(Linges.lignes[0].name);
     const animatedHeight = useRef(new Animated.Value(0)).current;
-
     const Textcolor = useColorScheme() === 'dark' ? Colors.dark.ComponentTextColor : Colors.light.ComponentTextColor;
     const CompColor = useColorScheme() === 'dark' ? Colors.dark.ComponentBackground : Colors.light.ComponentBackground;
     const BgColor = useColorScheme() === 'dark' ? Colors.dark.background : Colors.light.background;
@@ -37,8 +39,9 @@ const Dropdown = ({ onselect }) => {
         }
     }, [isOpen, animatedHeight]);
 
-    const handleSelect = (value) => {
-        setSelectedValue(value);
+    const handleSelect = (name,value) => {
+        setSelectedName(name);
+
         setIsOpen(false);
         Animated.spring(animatedHeight, {
             toValue: 0,
@@ -54,7 +57,7 @@ const Dropdown = ({ onselect }) => {
                 onPress={toggleDropdown}
                 titleStyle={{ color: Textcolor }}
             >
-                {selectedValue}
+                {selectedName}
                 <Icon name="chevron-down-outline" size={18} type='ionicon' color={BgColor} style={styles.icon} />
             </Button>
 
@@ -83,13 +86,13 @@ const Dropdown = ({ onselect }) => {
                         }]}>
                             <FlatList
                                 data={Linges.lignes}
-                                keyExtractor={(item) => item}
+                                keyExtractor={(item) => item.value}
                                 renderItem={({ item }) => (
                                     <TouchableOpacity
                                         style={styles.option}
-                                        onPress={() => handleSelect(item)}
+                                        onPress={() => handleSelect(item.name, item.value)}
                                     >
-                                        <Text style={[styles.optionText, { color: Textcolor }]}>{item}</Text>
+                                        <Text style={[styles.optionText, { color: Textcolor }]}>{item.name}</Text>
                                     </TouchableOpacity>
                                 )}
                             />
@@ -103,8 +106,8 @@ const Dropdown = ({ onselect }) => {
 
 const styles = StyleSheet.create({
     container: {
-    position:'absolute',
-    top:  (Dimensions.get('window').height - Dimensions.get('window').height) +5,
+    position:'relative',
+    top:  (Dimensions.get('window').height - Dimensions.get('window').height) +50,
     left:10,
 
     width:getResponsiveWidth(180),

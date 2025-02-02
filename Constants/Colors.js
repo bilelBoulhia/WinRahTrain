@@ -23,7 +23,7 @@ export default {
     },
     dark: {
         text: '#fff',
-        background: '#000',
+        background: '#164E78',
 
         tint: tintColorDark,
         tabIconDefault: '#ccc',

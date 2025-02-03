@@ -32,8 +32,8 @@ const DisplayCard = ({ station, destination, time }) => {
                     <Text style={[styles.text,{color: TextColor}]}>
                         {destination}
                     </Text>
-                    <Text style={[styles.text,{color: TextColor}]}>
-                        {new Date(time).getHours() + ':' + new Date(time).getMinutes() }
+                    <Text style={[styles.text, { color: TextColor }]}>
+                        {new Date(time).getHours() + ':' + String(new Date(time).getMinutes()).padStart(2, '0')}
                     </Text>
                 </View>
             </Card>

@@ -32,13 +32,13 @@ export default function SignalRClient() {
             try {
                 await Font.loadAsync({ 'Righteous': require('./assets/fonts/Righteous-Regular.ttf') });
             } catch (error) {
-                console.error(error);
+                alert(error);
             } finally {
                 setAppIsReady(true);
             }
         }
 
-        prepare().catch(console.error);
+        prepare();
         return () => unsubscribe?.();
     }, []);
 
@@ -51,7 +51,7 @@ export default function SignalRClient() {
                 });
 
             } catch (error) {
-                console.error("Connection error:", error);
+                alert(error);
             }
         };
 

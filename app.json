@@ -6,17 +6,10 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/splash-screen.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": [
-          "fetch"
-        ]
+        "UIBackgroundModes": ["fetch"]
       }
     },
     "android": {
@@ -33,13 +26,18 @@
       [
         "expo-font",
         {
-          "fonts": [
-            "assets/fonts/Righteous-Regular.ttf"
-          ]
+          "fonts": ["assets/fonts/Righteous-Regular.ttf"]
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#ffffff",
+          "image": "./assets/splash-screen.png",
+
+          "imageWidth": 200
         }
       ]
-
-
     ],
     "extra": {
       "eas": {

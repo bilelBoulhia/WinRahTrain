@@ -18,14 +18,18 @@ const SelectField = ({ fieldName, value, onSelect, data, isDisabled, loading }) 
         <View style={styles.container}>
             <Text style={styles.fieldName}>{fieldName}</Text>
             <View style={styles.buttonWrapper}>
-                <Button disabled={isDisabled || loading} onPress={() => selectRef.current?.open()}>
-                    {value || `Select ${fieldName}`}
+                <Button  disabled={isDisabled || loading} onPress={() => selectRef.current?.open()}>
+
+                    {loading ? (
+                        <View style={styles.activityOverlay}>
+                            <ActivityIndicator size="small"  color={Colors.light.primary} />
+                        </View>
+                    ) : (
+                        value || `Select ${fieldName}`
+                    )}
+
                 </Button>
-                {loading && (
-                    <View style={styles.activityOverlay}>
-                        <ActivityIndicator size="small" color={Colors.light.primary} />
-                    </View>
-                )}
+
             </View>
             <Select
                 onPress={() => isDisabled && selectRef.current?.close()}
@@ -56,15 +60,11 @@ const styles = StyleSheet.create({
     },
     buttonWrapper: {
         position: 'relative',
+
     },
+
     activityOverlay: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
+
         backgroundColor: 'rgba(255,255,255,0.5)',
     },
 });

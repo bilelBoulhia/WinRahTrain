@@ -24,7 +24,7 @@ const Form = ({ onResult }) => {
         const handleFetchingGare = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`https://wrtserver-latest.onrender.com/api/Gares/getGares?TrainRoutes=${trainRoute}`);
+                const res = await fetch(`https://wrstserver-latest.onrender.com/api/Gares/getGares?TrainRoutes=${trainRoute}`);
                 const jsonData = await res.json();
                 console.log(trainRoute);
                 console.log(jsonData);

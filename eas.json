@@ -12,6 +12,7 @@
       "android": {
         "gradleCommand": ":app:assembleRelease"
       }
+
     },
     "preview3": {
       "developmentClient": true
@@ -19,6 +20,13 @@
     "preview4": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "android": {
+        "env": {
+          "EAS_BUILD_DISABLE_BUNDLE_JAVASCRIPT_STEP": "1"
+        },
+        "gradleCommand": ":app:assembleRelease"
+      }
+    }
   }
 }

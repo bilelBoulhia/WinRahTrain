@@ -107,7 +107,7 @@ const Dropdown = ({ onselect }) => {
 const styles = StyleSheet.create({
     container: {
     position:'relative',
-    top:  (Dimensions.get('window').height - Dimensions.get('window').height) +50,
+    top:  (Dimensions.get('window').height - Dimensions.get('window').height) +5,
     left:10,
 
     width:getResponsiveWidth(180),

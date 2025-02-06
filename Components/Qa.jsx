@@ -15,9 +15,12 @@ import { Icon } from '@rneui/themed';
 
 
 
+
 const Qa = () => {
     const [expanded, setExpanded] = useState(false);
     const animatedHeight = useRef(new Animated.Value(0)).current;
+
+
 
 
 
@@ -37,13 +40,12 @@ const Qa = () => {
                 style={styles.iconContainer}
                 onPress={()=>toggleExpand()}
             >
-
-                    <Icon
+                <Icon
+                        color="white"
                         name="question-circle"
                         type="font-awesome"
                         size={24}
-
-                    />
+                   />
 
             </TouchableOpacity>
 
@@ -97,7 +99,7 @@ const Qa = () => {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top:  (Dimensions.get('window').height - Dimensions.get('window').height) +55  ,
+        top:  (Dimensions.get('window').height - Dimensions.get('window').height) +5 ,
         right: 10,
         zIndex: 1,
 
@@ -107,6 +109,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
 
     },
+
     modalOverlay: {
 
         flex: 1,

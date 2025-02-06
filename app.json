@@ -1,4 +1,3 @@
-
 {
   "expo": {
     "name": "WRT",
@@ -29,7 +28,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-
     },
     "plugins": [
       [
@@ -40,6 +38,8 @@
           ]
         }
       ]
+
+
     ],
     "extra": {
       "eas": {

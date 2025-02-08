@@ -28,11 +28,11 @@ const List = (Ligne) => {
         }
         const ListenToUpdates=()=>{
             try{
-                console.log(Ligne)
+
                 signalRService.connection.invoke("GetReports", Ligne.Ligne).catch(console.error);
                 signalRService.connection.on("ReportsFetched", (reports) => {
                     setReports(reports);
-                    console.log(reports);
+                    console.log('zbi',reports);
                 });
                 signalRService.connection.on("ReportReceived",(newReprt)=>{
                     setReports(prev=>[newReprt,...prev]);
@@ -105,7 +105,7 @@ const List = (Ligne) => {
 
                                 <DisplayCard
                                     time={item.arrivalHour}
-                                    destination={item.destinationtGare}
+                                    destination={item.destinationGare}
                                     station={item.currentGare}
                                 />
                             </MotiView>

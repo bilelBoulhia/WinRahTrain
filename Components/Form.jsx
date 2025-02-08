@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, useColorScheme } from 'react-native';
-import { View, Button } from '../Style/Theme';
+import {StyleSheet, useColorScheme} from 'react-native';
+import { View, Button,Text } from '../Style/Theme';
 import Colors from '../Constants/Colors';
 import SelectField from '../Components/selectField';
 
-import Linges from '../Constants/Linges.json';
+
 import signalRService from "../RequestHandlers/signalRService";
 
-const Form = ({ onResult }) => {
+const Form = ({ onResult ,trainRoute}) => {
     const [data, setData] = useState([]);
     const [currentGare, setDepartureStation] = useState(null);
-    const [destinationtGare, setDestinationStation] = useState(null);
-    const [trainRoute, setLigne] = useState("");
+    const [destinationGare, setDestinationStation] = useState(null);
     const [loading, setLoading] = useState(false);
     const colorScheme = useColorScheme();
     const backgroundColor = colorScheme === 'dark' ? Colors.dark.background : Colors.light.background;
 
     useEffect(() => {
-        // Reset stations when train route changes
+
         setDestinationStation(null);
         setDepartureStation(null);
 
         const handleFetchingGare = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`https://wrstserver-latest.onrender.com/api/Gares/getGares?TrainRoutes=${trainRoute}`);
+                const res = await fetch(`https://wrtserver-latest.onrender.com/api/Gares/getGares?TrainRoute=${trainRoute}`);
                 const jsonData = await res.json();
-                console.log(trainRoute);
-                console.log(jsonData);
-                setData(jsonData);
+                setData(jsonData.map(g=>g.gare1));
+
             } catch (error) {
                 alert(error);
             }
@@ -53,8 +51,8 @@ const Form = ({ onResult }) => {
     };
 
     const handleSubmit = async () => {
-        if (currentGare && destinationtGare) {
-            const report = { trainRoute, currentGare, destinationtGare };
+        if (currentGare && destinationGare) {
+            const report = { trainRoute, currentGare, destinationGare };
             await handleInsert(report);
             onResult(true);
         }
@@ -62,14 +60,11 @@ const Form = ({ onResult }) => {
 
     return (
         <View style={[styles.container, { backgroundColor }]}>
-            {/* Train Route Selection */}
-            <SelectField
-                fieldName="La linge"
-                value={trainRoute}
-                onSelect={setLigne}
-                data={Linges.lignes.map(l => l.value)}
-            />
-            {/* Departure Station */}
+
+            <Text style={styles.title}>
+                {trainRoute}
+            </Text>
+
             <SelectField
                 fieldName="Departure Station"
                 value={currentGare}
@@ -78,10 +73,10 @@ const Form = ({ onResult }) => {
                 data={data}
                 loading={loading}
             />
-            {/* Destination Station */}
+
             <SelectField
                 fieldName="Destination Station"
-                value={destinationtGare}
+                value={destinationGare}
                 isDisabled={!trainRoute}
                 onSelect={setDestinationStation}
                 data={data}
@@ -90,7 +85,7 @@ const Form = ({ onResult }) => {
             <View style={styles.button}>
                 <Button
                     onPress={handleSubmit}
-                    disabled={!currentGare || !destinationtGare || currentGare === destinationtGare}
+                    disabled={!currentGare || !destinationGare || currentGare === destinationGare}
                 >
                     report
                 </Button>

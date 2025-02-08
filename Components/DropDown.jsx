@@ -1,4 +1,4 @@
-import React, {useRef, useState, useCallback, forwardRef} from 'react';
+import React, {useRef, useState, useCallback, forwardRef, useEffect} from 'react';
 import {
     TouchableOpacity,
     FlatList,
@@ -6,19 +6,24 @@ import {
     Modal,
     TouchableWithoutFeedback,
     Animated,
-    useColorScheme, Dimensions,
+    useColorScheme, Dimensions, ActivityIndicator,
 } from 'react-native';
 import {View, Text, Button, getResponsiveFontSize, getResponsiveWidth} from '../Style/Theme';
-import Linges from '../Constants/Linges.json';
+
 import Colors from "../Constants/Colors";
 import { Icon } from '@rneui/themed';
 
 
 
 
-const Dropdown = ({ onselect }) => {
+const Dropdown = ({ onselect ,RoutesData,loading}) => {
+
+
+
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedName, setSelectedName] = useState(Linges.lignes[0].name);
+    const [selectedName, setSelectedName] = useState('Select a route');
+
+
     const animatedHeight = useRef(new Animated.Value(0)).current;
     const Textcolor = useColorScheme() === 'dark' ? Colors.dark.ComponentTextColor : Colors.light.ComponentTextColor;
     const CompColor = useColorScheme() === 'dark' ? Colors.dark.ComponentBackground : Colors.light.ComponentBackground;
@@ -39,7 +44,7 @@ const Dropdown = ({ onselect }) => {
         }
     }, [isOpen, animatedHeight]);
 
-    const handleSelect = (name,value) => {
+    const handleSelect = (name) => {
         setSelectedName(name);
 
         setIsOpen(false);
@@ -47,7 +52,7 @@ const Dropdown = ({ onselect }) => {
             toValue: 0,
             useNativeDriver: false,
         }).start();
-        onselect(value);
+        onselect(name);
     };
 
     return (
@@ -57,7 +62,9 @@ const Dropdown = ({ onselect }) => {
                 onPress={toggleDropdown}
                 titleStyle={{ color: Textcolor }}
             >
-                {selectedName}
+
+                {loading ? 'Loading...' : selectedName}
+
                 <Icon name="chevron-down-outline" size={18} type='ionicon' color={BgColor} style={styles.icon} />
             </Button>
 
@@ -85,14 +92,14 @@ const Dropdown = ({ onselect }) => {
                             backgroundColor: CompColor
                         }]}>
                             <FlatList
-                                data={Linges.lignes}
-                                keyExtractor={(item) => item.value}
+                                data={RoutesData}
+                                keyExtractor={(item) => item.trainRoute1}
                                 renderItem={({ item }) => (
                                     <TouchableOpacity
                                         style={styles.option}
-                                        onPress={() => handleSelect(item.name, item.value)}
+                                        onPress={() => handleSelect(item.trainRoute1)}
                                     >
-                                        <Text style={[styles.optionText, { color: Textcolor }]}>{item.name}</Text>
+                                        <Text style={[styles.optionText, { color: Textcolor }]}>{item.trainRoute1}</Text>
                                     </TouchableOpacity>
                                 )}
                             />

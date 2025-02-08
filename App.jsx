@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import { StyleSheet} from 'react-native';
-import {  View } from './Style/Theme';
+import {ActivityIndicator, StyleSheet} from 'react-native';
+import {  View,Text } from './Style/Theme';
 import 'react-native-url-polyfill/auto';
-import Linges from './Constants/Linges.json';
+
 import Links from "./Components/Links";
 import Qa from "./Components/Qa";
 import Moudal from "./Components/Moudal";
@@ -13,6 +13,7 @@ import Dropdown from "./Components/DropDown";
 import signalRService from "./RequestHandlers/signalRService";
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from 'expo-font';
+import Colors from "./Constants/Colors";
 
 
 
@@ -20,9 +21,9 @@ SplashScreen.preventAutoHideAsync().catch(() => {});
 export default function SignalRClient() {
 
 
-    const [selectedValue, setSelectedValue] = useState(Linges.lignes[0].value);
-
-
+    const [routesData, setRoutesData] = useState([]);
+    const [selectedValue, setSelectedValue] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [appIsReady, setAppIsReady] = useState(false);
 
 
@@ -43,6 +44,25 @@ export default function SignalRClient() {
     }, []);
 
     useEffect(() => {
+
+        const handleFetchingRoute = async () => {
+
+            try {
+                const res = await fetch('https://wrtserver-latest.onrender.com/api/Gares/getTrainRoutes');
+                const jsonData = await res.json();
+                setRoutesData(jsonData);
+                setLoading(false);
+
+
+            } catch (error) {
+                alert(error);
+            }
+
+
+
+        };
+
+
         const setupConnection = async () => {
             try {
                 await signalRService.startConnection();
@@ -54,6 +74,8 @@ export default function SignalRClient() {
                 alert(error);
             }
         };
+
+        handleFetchingRoute();
 
         setupConnection().catch(err=>console.log(err));
         return () => {
@@ -79,10 +101,11 @@ export default function SignalRClient() {
 
     return (
         <View style={styles.container} onLayout={onLayoutRootView}>
-            <Dropdown onselect={setSelectedValue} />
+
+            <Dropdown loading={loading} RoutesData={routesData} onselect={setSelectedValue} />
             <Qa />
             <List Ligne={selectedValue} />
-            <Moudal style={styles.modalButton} />
+            <Moudal trainRoute={selectedValue} routeSelected={selectedValue === null || selectedValue === 'Select a route'} style={styles.modalButton} />
             <Links />
         </View>
     );
@@ -98,5 +121,5 @@ const styles = StyleSheet.create({
         marginBottom: 100,
         justifyContent: 'center',
         alignSelf: 'center'
-    },
+    }
 });

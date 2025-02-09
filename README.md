@@ -24,7 +24,7 @@
 
 * User Based
 * Realtime
-* Cross platform
+
   
 
 ## How To Use

@@ -66,8 +66,7 @@ npm expo start --ios
 This software uses the following open source packages:
 
 - [Expo](https://expo.dv)
-- [Node.js](https://nodejs.org/)
-- [Firbase](https://firebase.google.com)
+ 
 </a>
 
 
